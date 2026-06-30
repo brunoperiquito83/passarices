@@ -1,0 +1,35 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.passarices.app04'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'com.passarices.app04'
+        minSdk 26
+        targetSdk 35
+        versionCode 400
+        versionName '0.4.0'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('../signing/passarices-release.keystore')
+            storePassword 'passarices040'
+            keyAlias 'passarices'
+            keyPassword 'passarices040'
+            enableV1Signing true
+            enableV2Signing true
+            enableV3Signing true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.release
+        }
+        debug { applicationIdSuffix '.debug' }
+    }
+}
