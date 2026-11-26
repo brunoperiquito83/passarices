@@ -21,7 +21,8 @@ import org.json.JSONObject
 class MeteoState(private val ctx:Context):ViewModel(){
     val repo=Repo(ctx);private val prefs=ctx.getSharedPreferences("options",Context.MODE_PRIVATE)
     var places:List<Place> by mutableStateOf(repo.places());private set
-    var gps by mutableStateOf<Place?>(null);private set
+    private var gpsState by mutableStateOf<Place?>(null)
+    val gps:Place? get()=gpsState
     var gpsMessage by mutableStateOf("Ativa a localização para consultar o tempo no local atual.")
     val all:List<Place> get()=places+listOfNotNull(gps)
     val data=mutableStateMapOf<String,LocalData>()
@@ -32,8 +33,9 @@ class MeteoState(private val ctx:Context):ViewModel(){
     var alertRevision by mutableIntStateOf(0);private set
     fun alertOn(id:String,kind:String):Boolean { alertRevision; return AlertSettings.enabled(ctx,id,kind) }
     fun setAlert(id:String,kind:String,value:Boolean){AlertSettings.set(ctx,id,kind,value);alertRevision++}
-    var rainThreshold by mutableIntStateOf(AlertSettings.threshold(ctx));private set
-    fun setRainThreshold(value:Int){rainThreshold=value;AlertSettings.threshold(ctx,value)}
+    private var rainThresholdState by mutableIntStateOf(AlertSettings.threshold(ctx))
+    val rainThreshold:Int get()=rainThresholdState
+    fun setRainThreshold(value:Int){rainThresholdState=value;AlertSettings.threshold(ctx,value)}
     var kp by mutableStateOf(repo.read("noaa_kp"));private set
     var searchResult by mutableStateOf<Packet?>(null);private set
     var searching by mutableStateOf(false);private set
@@ -59,17 +61,19 @@ class MeteoState(private val ctx:Context):ViewModel(){
     private var radarJob:Job?=null
     fun loadRadar(force:Boolean=false){if(radarJob?.isActive==true)return;radarJob=viewModelScope.launch{radar=repo.radar(force)}}
     var updating by mutableStateOf(false);private set
-    var background by mutableStateOf(prefs.getBoolean("background",true));private set
-    var primary by mutableStateOf(prefs.getString("primary",places.firstOrNull()?.id.orEmpty()).orEmpty());private set
+    private var backgroundState by mutableStateOf(prefs.getBoolean("background",true))
+    val background:Boolean get()=backgroundState
+    private var primaryState by mutableStateOf(prefs.getString("primary",places.firstOrNull()?.id.orEmpty()).orEmpty())
+    val primary:String get()=primaryState
     var extras by mutableStateOf<Map<String,Packet>>(emptyMap());private set
     private var refreshJob:Job?=null
     private var gpsJob:Job?=null
     private val extraJobs=mutableMapOf<String,Job>()
     init {places.forEach{data[it.id]=repo.cached(it)};repo.background(background);refresh(true)}
     fun refresh(force:Boolean){if(refreshJob?.isActive==true)return;refreshJob=viewModelScope.launch{updating=true;try{supervisorScope{launch{warnings=repo.warnings(force)};launch{observations=repo.observations(force)};launch{seismic=repo.seismic(force)};launch{kp=repo.geomagnetic(force)};launch{fire=(0..2).map{async{repo.fire(it,force)}}.awaitAll()};all.map{p->launch{val result=repo.refresh(p,force);if(all.any{it==p})data[p.id]=result}}.joinAll()};AlertSettings.notify(ctx,all,repo);WeatherWidget.updateAll(ctx)}finally{updating=false}}}
-    fun setGps(p:Place){if(gps?.latitude==p.latitude&&gps?.longitude==p.longitude)return;gpsJob?.cancel();data[p.id]=repo.cached(p);gps=p;gpsMessage="";gpsJob=viewModelScope.launch{val v=repo.refresh(p,true);if(gps==p)data[p.id]=v}}
-    fun setBackground(value:Boolean){background=value;prefs.edit().putBoolean("background",value).apply();repo.background(value)}
-    fun setPrimary(id:String){primary=id;prefs.edit().putString("primary",id).apply();WeatherWidget.updateAll(ctx)}
+    fun setGps(p:Place){if(gps?.latitude==p.latitude&&gps?.longitude==p.longitude)return;gpsJob?.cancel();data[p.id]=repo.cached(p);gpsState=p;gpsMessage="";gpsJob=viewModelScope.launch{val v=repo.refresh(p,true);if(gps==p)data[p.id]=v}}
+    fun setBackground(value:Boolean){backgroundState=value;prefs.edit().putBoolean("background",value).apply();repo.background(value)}
+    fun setPrimary(id:String){primaryState=id;prefs.edit().putString("primary",id).apply();WeatherWidget.updateAll(ctx)}
     fun reset(){places=runCatching{val a=org.json.JSONArray(ctx.assets.open("locations.json").bufferedReader().use{it.readText()});List(a.length()){val o=a.getJSONObject(it);val id=o.getString("id");Place(id,o.getString("name"),o.getString("reference"),o.getDouble("latitude"),o.getDouble("longitude"),WeatherSpec.districts[id].orEmpty())}}.getOrDefault(places);persist()}
     fun move(i:Int,delta:Int){val j=i+delta;if(j !in places.indices)return;val reordered=places.toMutableList();val moved=reordered.removeAt(i);reordered.add(j,moved);places=reordered;persist()}
     fun remove(id:String){if(places.size<=1)return;places=places.filterNot{it.id==id};if(primary==id)setPrimary(places.first().id);persist()}
