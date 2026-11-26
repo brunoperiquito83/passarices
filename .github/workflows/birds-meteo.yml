@@ -2,6 +2,8 @@ name: Birds Meteo Android validation
 on:
   push:
     branches: [birds-meteo]
+  pull_request:
+    branches: [birds-meteo]
   workflow_dispatch:
 permissions:
   contents: read
