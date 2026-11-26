@@ -1,0 +1,21 @@
+PASS 9 localidades preservadas byte a byte
+PASS XML app/src/main/AndroidManifest.xml
+PASS XML app/src/main/res/drawable/bird.xml
+PASS XML app/src/main/res/drawable/widget_bg.xml
+PASS XML app/src/main/res/layout/weather_widget.xml
+PASS XML app/src/main/res/values/styles.xml
+PASS XML app/src/main/res/xml/weather_widget_info.xml
+java: /usr/bin/java
+kotlinc: /root/.sdkman/candidates/kotlin/current/bin/kotlinc
+gradle: ausente
+sdkmanager: ausente
+adb: ausente
+apksigner: ausente
+dl.google.com: DNS FALHOU [Errno -3] Temporary failure in name resolution
+services.gradle.org: DNS FALHOU [Errno -3] Temporary failure in name resolution
+api.open-meteo.com: DNS FALHOU [Errno -3] Temporary failure in name resolution
+api.ipma.pt: DNS FALHOU [Errno -3] Temporary failure in name resolution
+58 testes JVM executados; 58 passaram.
+5 testes Android escritos, não executados.
+APK: não compilado, não assinado, não instalado.
+GitHub Actions: configurado, não executado.

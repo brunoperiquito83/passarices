@@ -1,0 +1,11 @@
+[
+ {"id":"palmela","name":"Palmela","reference":"Vale de Touros","latitude":38.58977,"longitude":-8.92003,"source":"https://mapcarta.com/pt/N13396287180"},
+ {"id":"carnaxide","name":"Carnaxide","reference":"Centro Cívico","latitude":38.72654,"longitude":-9.24149,"source":"https://mapcarta.com/pt/35968930"},
+ {"id":"oriente","name":"Lisboa Oriente","reference":"Gare do Oriente","latitude":38.76782,"longitude":-9.09991,"source":"https://mapcarta.com/pt/W1437052582"},
+ {"id":"centro","name":"Lisboa Centro","reference":"Rossio","latitude":38.7139,"longitude":-9.13944,"source":"https://mapcarta.com/pt/26239126"},
+ {"id":"restelo","name":"Lisboa Restelo","reference":"Bairro do Restelo","latitude":38.70195,"longitude":-9.2131,"source":"https://mapcarta.com/pt/39156814"},
+ {"id":"castro_verde","name":"Castro Verde","reference":"Beringelinho","latitude":37.62554,"longitude":-8.00143,"source":"https://mapcarta.com/pt/N1476124020"},
+ {"id":"almeida","name":"Almeida","reference":"Vale da Mula","latitude":40.703,"longitude":-6.8206,"source":"https://mapcarta.com/pt/28374880"},
+ {"id":"porto","name":"Porto","reference":"Aliados / Praça da Liberdade","latitude":41.14641,"longitude":-8.61136,"source":"https://mapcarta.com/N6549787506"},
+ {"id":"setubal","name":"Setúbal","reference":"Praça de Bocage","latitude":38.52432,"longitude":-8.8926,"source":"https://mapcarta.com/pt/35929320"}
+]

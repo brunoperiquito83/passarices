@@ -1,0 +1,59 @@
+PASS coordenadas preservadas
+PASS previsao 16 dias e fuso automatico
+PASS 15 minutos: 24 intervalos
+PASS catalogo horario sem duplicados
+PASS fallback sem campos experimentais
+PASS ar e polen
+PASS historico data exata
+PASS mar com celula maritima
+PASS modelo explicito
+PASS WMO conhecidos e desconhecidos
+PASS vento direcoes circular e oeste
+PASS Beaufort fronteiras
+PASS ausencia nao equivale a zero
+PASS formato portugues
+PASS hora mais recente anterior
+PASS sem hora passada
+PASS tempo invalido ignorado
+PASS cache fresca
+PASS cache expirada
+PASS lua nova aproximada
+PASS coordenadas invalidas rejeitadas
+PASS nove distritos configurados
+PASS radar zoom limite
+PASS radar equador e Greenwich
+PASS radar limites polares e antimeridiano
+PASS radar URL autorizada
+PASS radar host e path indevidos rejeitados
+PASS distancia identica
+PASS distancia de um grau no equador
+PASS IPMA sentinel e zero
+PASS IPMA direcao
+PASS idade UTC e futuro
+PASS codigos municipais nove localidades
+PASS risco oficial 1-5
+PASS aviso ativo elegivel
+PASS aviso futuro ate 24 horas
+PASS aviso expirado e verde excluidos
+PASS aviso com datas invalidas excluido
+PASS chuva limiar inclusivo
+PASS chuva requer precipitacao positiva
+PASS distancia sismo invalida rejeitada
+PASS caudal sete dias e quantis
+PASS datas UTC explicitas e sem sufixo
+PASS pesquisa com codifica??o e filtro PT
+PASS pesquisa mundial e termo curto
+PASS USNO fuso inverno/ver?o
+PASS USNO coordenadas e data
+PASS crepusculos ordem fisica
+PASS crepusculo Palmela janela inverno
+PASS crepusculo polar sem cruzamento
+PASS Kp valores v?lidos e inv?lidos
+PASS escala geomagn?tica
+PASS efeitos clima sem falsificar aus?ncia
+PASS efeitos dia noite e chuva
+PASS climatologia pedido ERA5 fixo
+PASS normais completas 12 meses
+PASS normal rejeita m?s incompleto
+PASS normal rejeita dados nulos e duplicados
+58 testes aprovados
